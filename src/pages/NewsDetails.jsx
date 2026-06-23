@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { news } from "../data/News";
+import { news } from "../data/news";
 
 const NewsDetails = () => {
   const { id } = useParams();

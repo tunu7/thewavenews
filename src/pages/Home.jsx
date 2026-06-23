@@ -1,6 +1,6 @@
 import Hero from "../components/Hero";
 import NewsCard from "../components/NewsCard";
-import { news } from "../data/News";
+import { news } from "../data/news";
 
 const Home = () => {
   return (
