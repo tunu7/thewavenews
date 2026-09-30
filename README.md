@@ -1,12 +1,70 @@
-# React + Vite
+# The Wave News
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Delivering trusted news from Arunachal Pradesh and Northeast India.
 
-Currently, two official plugins are available:
+**Live site:** https://thewavenews.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Built with [Next.js](https://nextjs.org) (App Router), React and [Tailwind CSS](https://tailwindcss.com), deployed on [Vercel](https://vercel.com).
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Requires Node.js 20.9 or newer.
+
+```bash
+npm install
+cp .env.example .env.local   # optional — see below
+npm run dev
+```
+
+Open http://localhost:3000.
+
+## Scripts
+
+| Command         | What it does                         |
+| --------------- | ------------------------------------ |
+| `npm run dev`   | Start the development server         |
+| `npm run build` | Create a production build            |
+| `npm start`     | Serve the production build           |
+| `npm run lint`  | Check the code with ESLint           |
+
+## Project structure
+
+```
+src/
+  app/          Pages and layout (App Router)
+  components/   Navbar, BreakingNews, Hero, NewsCard, Footer
+  data/         Article data (news.js)
+  lib/          Helpers
+```
+
+## Adding an article
+
+Articles currently live in `src/data/news.js`. Add an object to the array:
+
+```js
+{
+  id: 7,                       // unique number, used in the URL (/news/7)
+  title: "Headline",
+  image: "https://images.unsplash.com/photo-…",
+  category: "Arunachal",
+  author: "Staff Reporter",
+  date: "2026-10-01",          // YYYY-MM-DD
+  readTime: 3,                 // minutes
+  description: "One or two sentence summary.",
+  content: "First paragraph.\n\nSecond paragraph."
+}
+```
+
+Images from a new domain must be added to `images.remotePatterns` in `next.config.mjs`.
+
+## Environment variables
+
+See `.env.example`. None are required to run the site locally.
+
+| Variable               | Purpose                                              |
+| ---------------------- | ---------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URL for the sitemap, robots.txt and social previews |
+
+## Deployment
+
+The site is connected to Vercel through GitHub: every push to `main` is deployed to production automatically. Run `npm run build` locally before pushing to catch errors.

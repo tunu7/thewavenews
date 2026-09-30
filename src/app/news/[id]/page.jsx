@@ -15,7 +15,19 @@ export async function generateMetadata({ params }) {
   const { id } = await params;
   const article = news.find((item) => item.id === Number(id));
 
-  return { title: article ? `${article.title} | The Wave News` : "The Wave News" };
+  if (!article) return { title: "The Wave News" };
+
+  return {
+    title: `${article.title} | The Wave News`,
+    description: article.description,
+    openGraph: {
+      title: article.title,
+      description: article.description,
+      type: "article",
+      publishedTime: article.date,
+      images: [article.image],
+    },
+  };
 }
 
 const NewsDetails = async ({ params }) => {

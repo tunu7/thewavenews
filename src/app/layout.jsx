@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar";
 import BreakingNews from "@/components/BreakingNews";
 import Footer from "@/components/Footer";
 
+import { siteUrl } from "@/lib/site";
+
 import "./globals.css";
 
 const inter = Inter({
@@ -17,9 +19,14 @@ const newsreader = Newsreader({
 });
 
 export const metadata = {
+  metadataBase: new URL(siteUrl),
   title: "The Wave News",
   description:
     "Delivering trusted news from Arunachal Pradesh and Northeast India.",
+  openGraph: {
+    siteName: "The Wave News",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {
