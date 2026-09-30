@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 
 import { categories } from "@/data/categories";
+import { companyPages } from "@/data/company";
 
 const columns = [
   {
@@ -18,10 +19,7 @@ const columns = [
   },
   {
     title: "Company",
-    links: ["About", "Contact", "Advertise", "Careers"].map((name) => ({
-      name,
-      href: "/",
-    })),
+    links: companyPages,
   },
 ];
 
