@@ -6,14 +6,22 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 
+import { categories } from "@/data/categories";
+
 const columns = [
   {
     title: "Categories",
-    links: ["Arunachal", "Politics", "Sports", "Business"],
+    links: categories.slice(0, 5).map((category) => ({
+      name: category.name,
+      href: `/category/${category.slug}`,
+    })),
   },
   {
     title: "Company",
-    links: ["About", "Contact", "Advertise", "Careers"],
+    links: ["About", "Contact", "Advertise", "Careers"].map((name) => ({
+      name,
+      href: "/",
+    })),
   },
 ];
 
@@ -54,9 +62,9 @@ export default function Footer() {
 
               <ul className="space-y-2.5 text-sm">
                 {column.links.map((link) => (
-                  <li key={link}>
-                    <Link href="/" className="text-white/80 hover:text-white">
-                      {link}
+                  <li key={link.name}>
+                    <Link href={link.href} className="text-white/80 hover:text-white">
+                      {link.name}
                     </Link>
                   </li>
                 ))}

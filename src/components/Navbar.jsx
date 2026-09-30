@@ -9,15 +9,15 @@ import {
   FaSearch,
 } from "react-icons/fa";
 
+import SearchForm from "./SearchForm";
+import { categories } from "@/data/categories";
+
 const menus = [
-  "Home",
-  "Arunachal",
-  "India",
-  "Politics",
-  "Sports",
-  "Business",
-  "Jobs",
-  "Contact",
+  { name: "Home", href: "/" },
+  ...categories.map((category) => ({
+    name: category.name,
+    href: `/category/${category.slug}`,
+  })),
 ];
 
 export default function Navbar() {
@@ -76,31 +76,15 @@ export default function Navbar() {
               </div>
             </Link>
 
-            <div className="hidden lg:flex items-center">
+            <SearchForm className="hidden lg:block w-64" />
 
-              <label className="relative">
-
-                <span className="sr-only">Search news</span>
-
-                <FaSearch
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-muted"
-                />
-
-                <input
-                  type="search"
-                  placeholder="Search news"
-                  className="w-64 bg-white border border-rule rounded-full py-2 pl-10 pr-4 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/15 transition"
-                />
-              </label>
-
-            </div>
-
-            <button
+            <Link
+              href="/search"
               className="lg:hidden text-lg p-2 -mr-2"
               aria-label="Search"
             >
               <FaSearch />
-            </button>
+            </Link>
 
           </div>
 
@@ -114,19 +98,20 @@ export default function Navbar() {
         <ul className="max-w-7xl mx-auto px-6 flex items-center gap-8 h-12 text-sm font-medium">
 
           {menus.map((item) => {
-            const active = item === "Home" && pathname === "/";
+            const active = pathname === item.href;
 
             return (
-              <li key={item}>
+              <li key={item.name}>
                 <Link
-                  href="/"
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
                   className={`relative py-3 transition-colors hover:text-brand ${
                     active
                       ? "text-brand after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:bg-brand"
                       : ""
                   }`}
                 >
-                  {item}
+                  {item.name}
                 </Link>
               </li>
             );
@@ -147,7 +132,7 @@ export default function Navbar() {
       />
 
       <div
-        className={`lg:hidden fixed top-0 left-0 h-full w-72 max-w-[85vw] bg-paper z-50 shadow-xl transition-transform duration-300 ${
+        className={`lg:hidden fixed top-0 left-0 h-full w-72 max-w-[85vw] overflow-y-auto bg-paper z-50 shadow-xl transition-transform duration-300 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
         aria-hidden={!open}
@@ -169,16 +154,24 @@ export default function Navbar() {
 
         </div>
 
+        <SearchForm
+          className="px-5 pt-5"
+          onSubmit={() => setOpen(false)}
+        />
+
         <ul className="px-5 py-4">
 
           {menus.map((item) => (
-            <li key={item}>
+            <li key={item.name}>
               <Link
-                href="/"
-                className="block py-3 border-b border-rule text-base font-medium hover:text-brand"
+                href={item.href}
+                aria-current={pathname === item.href ? "page" : undefined}
+                className={`block py-3 border-b border-rule text-base font-medium hover:text-brand ${
+                  pathname === item.href ? "text-brand" : ""
+                }`}
                 onClick={() => setOpen(false)}
               >
-                {item}
+                {item.name}
               </Link>
             </li>
           ))}

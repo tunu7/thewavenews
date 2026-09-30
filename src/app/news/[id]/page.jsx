@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
 
-import NewsCard from "@/components/NewsCard";
+import NewsGrid from "@/components/NewsGrid";
+import { getCategorySlug } from "@/data/categories";
 import { news } from "@/data/news";
 import { formatDate } from "@/lib/format";
 
@@ -57,9 +58,12 @@ const NewsDetails = async ({ params }) => {
             Back to news
           </Link>
 
-          <p className="mt-8 text-xs font-semibold uppercase tracking-wider text-brand">
+          <Link
+            href={`/category/${getCategorySlug(article.category)}`}
+            className="mt-8 block w-fit text-xs font-semibold uppercase tracking-wider text-brand hover:underline underline-offset-4"
+          >
             {article.category}
-          </p>
+          </Link>
 
           <h1 className="mt-3 font-serif text-4xl sm:text-5xl font-bold leading-[1.1] tracking-tight">
             {article.title}
@@ -111,11 +115,7 @@ const NewsDetails = async ({ params }) => {
           More Stories
         </h2>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-          {moreStories.map((item) => (
-            <NewsCard key={item.id} article={item} />
-          ))}
-        </div>
+        <NewsGrid articles={moreStories} />
 
       </section>
     </>

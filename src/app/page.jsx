@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import NewsCard from "@/components/NewsCard";
+import NewsGrid from "@/components/NewsGrid";
 import { news } from "@/data/news";
 
 const Home = () => {
@@ -13,16 +13,7 @@ const Home = () => {
           Latest News
         </h2>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-
-          {news.map((article) => (
-            <NewsCard
-              key={article.id}
-              article={article}
-            />
-          ))}
-
-        </div>
+        <NewsGrid articles={news} />
 
       </section>
     </>

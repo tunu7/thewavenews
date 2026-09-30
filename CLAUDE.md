@@ -21,12 +21,15 @@ src/
     layout.jsx          # Root layout: fonts, metadata, Navbar/BreakingNews/Footer
     page.jsx            # Home: Hero + Latest News grid
     news/[id]/page.jsx  # Article page, statically generated from src/data/news.js
+    category/[slug]/    # Category listing, one static page per entry in src/data/categories.js
+    search/page.jsx     # Search results for ?q= (dynamic, noindex)
     not-found.jsx       # 404 page
     sitemap.js, robots.js, icon.svg
     globals.css         # Tailwind import + design tokens (@theme)
-  components/           # Navbar, BreakingNews, Hero, NewsCard, Footer
+  components/           # Navbar, BreakingNews, Hero, NewsCard, NewsGrid, SearchForm, Footer
   data/news.js          # Article data (placeholder — no CMS/database yet)
-  lib/                  # Small helpers (formatDate, site config)
+  data/categories.js    # Category list (name + slug) and category lookups
+  lib/                  # Helpers: formatDate, searchNews, site URL
 ```
 
 Import from `src` with the `@/` alias (`@/components/Hero`), not relative `../` paths.
@@ -39,6 +42,8 @@ Import from `src` with the `@/` alias (`@/components/Hero`), not relative `../` 
   - Fonts: `font-serif` (Newsreader) for headlines and article body, `font-sans` (Inter) for UI text
   - Section headings use the `border-t-2 border-ink pt-4` rule style; category labels are `text-xs font-semibold uppercase tracking-wider text-brand`
 - **Images** use `next/image`. Remote hosts must be allowed in `next.config.mjs` → `images.remotePatterns` (only `images.unsplash.com` today).
+- **Categories**: an article's `category` must match a `name` in `src/data/categories.js` (its slug is the lowercased name). Adding a category there adds it to the navbar, sitemap and `/category/<slug>` automatically.
+- **Search** (`searchNews` in `@/lib/search`) is a simple in-memory match: every word of the query must appear in the title, description, content, category or author. `SearchForm` uses `next/form` and submits to `/search?q=`.
 - **Article shape** (`src/data/news.js`): `id` (number), `title`, `image`, `category`, `author`, `date` (`YYYY-MM-DD`), `readTime` (minutes), `description`, `content`. Blank lines in `content` split paragraphs.
 - Format dates with `formatDate` from `@/lib/format` (fixed UTC timezone to avoid hydration mismatches).
 - Route params are async in Next.js 16: `const { id } = await params;`
@@ -53,5 +58,5 @@ Import from `src` with the `@/` alias (`@/components/Hero`), not relative `../` 
 
 ## Not built yet
 
-- Search box, category pages and footer links are placeholders (they link to `/`).
+- Footer "Company" links (About, Contact, Advertise, Careers) are placeholders linking to `/`.
 - `@supabase/supabase-js` and `@supabase/ssr` are installed but not used yet. If wiring it up, add the env vars from `.env.example`.
