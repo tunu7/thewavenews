@@ -4,7 +4,7 @@ Delivering trusted news from Arunachal Pradesh and Northeast India.
 
 **Live site:** https://thewavenews.vercel.app
 
-Built with [Next.js](https://nextjs.org) (App Router), React and [Tailwind CSS](https://tailwindcss.com), deployed on [Vercel](https://vercel.com).
+Built with [Next.js](https://nextjs.org) (App Router), TypeScript, React and [Tailwind CSS](https://tailwindcss.com), deployed on [Vercel](https://vercel.com).
 
 ## Getting started
 
@@ -26,20 +26,21 @@ Open http://localhost:3000.
 | `npm run build` | Create a production build            |
 | `npm start`     | Serve the production build           |
 | `npm run lint`  | Check the code with ESLint           |
+| `npm run typecheck` | Check types with TypeScript      |
 
 ## Project structure
 
 ```
 src/
-  app/          Pages and layout (App Router)
-  components/   Navbar, BreakingNews, Hero, NewsCard, Footer
-  data/         Article data (news.js)
+  app/          Routes (App Router); public pages live in app/(site)
+  components/   UI components (components/site = public site)
+  data/         Placeholder content (news.ts, categories.ts, company.ts)
   lib/          Helpers
 ```
 
 ## Adding an article
 
-Articles currently live in `src/data/news.js`. Add an object to the array:
+Articles currently live in `src/data/news.ts`. Add an object to the array:
 
 ```js
 {
